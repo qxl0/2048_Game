@@ -39,6 +39,12 @@ class Cell {
   get tile() {
     return this.#tile;
   }
+  set tile(value) {
+    this.#tile = value;
+    if (value == null) return;
+    this.#tile.x = this.#x;
+    this.#tile.y = this.#y;
+  }
 }
 function createCellElements(gridElement) {
   const cells = [];
