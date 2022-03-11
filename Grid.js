@@ -7,5 +7,8 @@ export default class Grid {
     gridElement.style.setProperty("--grid-size", GRID_SIZE);
     gridElement.style.setProperty("--cell-size", `${CELL_SIZE}vmin`);
     gridElement.style.setProperty("--cell-gap", `${CELL_GAP}vmin`);
+    createCellElements(gridElement);
   }
 }
+
+function createCellElements(gridElement) {}
