@@ -32,3 +32,19 @@ body {
   background-color: #888;
   border-radius: 1vmin;
 }
+
+.tile {
+  --x: 1;
+  --y: 2;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: var(--cell-size);
+  height: var(--cell-size);
+  border-radius: 1vmin;
+  background-color: red;
+
+  top: calc(var(--y) * (var(--cell-size) + var(--cell-gap)) + var(--cell-gap));
+  left: calc(var(--x) * (var(--cell-size) + var(--cell-gap)) + var(--cell-gap));
+}
