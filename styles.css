@@ -1,0 +1,16 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  font-family: Arial;
+}
+
+body {
+  background-color: #333;
+}
+#game-board {
+  display: grid;
+  grid-template-columns: repeat(4, 20vmin);
+  grid-template-rows: repeat(4, 20vmin);
+  background-color: #ccc;
+}
