@@ -17,10 +17,11 @@ export default class Grid {
     });
   }
   get #emptyCells() {
-    return this.#cells.filter((cell) => (cell.tile = null));
+    return this.#cells.filter((cell) => cell.tile == null);
   }
   randomEmptyCell() {
     const randomIndex = Math.floor(Math.random() * this.#emptyCells.length);
+    console.log(this.#emptyCells[randomIndex]);
     return this.#emptyCells[randomIndex];
   }
 }
