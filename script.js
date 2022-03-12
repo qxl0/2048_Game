@@ -30,6 +30,9 @@ function handleInput(e) {
       setupInput();
       break;
   }
+
+  grid.cells.forEach((cell) => cell.mergeTiles());
+
   setupInput();
 }
 
@@ -38,6 +41,17 @@ function moveUp() {
   return slideTiles(cells);
 }
 
+function moveDown() {
+  return slideTiles(grid.cellsByColumn.map((column) => [...column].reverse()));
+}
+
+function moveLeft() {
+  return slideTiles(grid.cellsByRow);
+}
+
+function moveRight() {
+  return slideTiles(grid.cellsByRow.map((row) => [...row].reverse()));
+}
 function slideTiles(cells) {
   cells.forEach((group) => {
     for (let i = 1; i < group.length; i++) {

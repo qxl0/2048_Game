@@ -13,14 +13,12 @@ export default class Grid {
         cellElement,
         index % GRID_SIZE,
         Math.floor(index / GRID_SIZE)
-      )
-    })
+      );
+    });
   }
 
-  
-
   get cells() {
-    return this.#cells
+    return this.#cells;
   }
   get cellsByColumn() {
     return this.#cells.reduce((cellGrid, cell) => {
@@ -29,6 +27,15 @@ export default class Grid {
       return cellGrid;
     }, []);
   }
+
+  get cellsByRow() {
+    return this.#cells.reduce((cellGrid, cell) => {
+      cellGrid[cell.y] = cellGrid[cell.y] || [];
+      cellGrid[cell.y][cell.x] = cell;
+      return cellGrid;
+    }, []);
+  }
+
   get #emptyCells() {
     return this.#cells.filter((cell) => cell.tile == null);
   }
@@ -82,6 +89,13 @@ class Cell {
       this.tile == null ||
       (this.tile.value === tile.value && this.mergeTile == null)
     );
+  }
+
+  mergeTiles() {
+    if (this.tile == null || this.mergeTile == null) return;
+    this.tile.value = this.tile.value + this.mergeTile.value;
+    this.mergeTile.remove();
+    this.mergeTile = null;
   }
 }
 
