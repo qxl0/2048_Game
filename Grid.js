@@ -13,16 +13,21 @@ export default class Grid {
         cellElement,
         index % GRID_SIZE,
         Math.floor(index / GRID_SIZE)
-      );
-    });
+      )
+    })
   }
 
+  
+
+  get cells() {
+    return this.#cells
+  }
   get cellsByColumn() {
     return this.#cells.reduce((cellGrid, cell) => {
       cellGrid[cell.x] = cellGrid[cell.x] || [];
       cellGrid[cell.x][cell.y] = cell;
       return cellGrid;
-    });
+    }, []);
   }
   get #emptyCells() {
     return this.#cells.filter((cell) => cell.tile == null);

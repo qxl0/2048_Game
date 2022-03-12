@@ -7,7 +7,7 @@ const grid = new Grid(gameBoard);
 grid.randomEmptyCell().tile = new Tile(gameBoard);
 grid.randomEmptyCell().tile = new Tile(gameBoard);
 setupInput();
-console.log(grid.cellsByColumn);
+console.log(grid.cells);
 function setupInput() {
   window.addEventListener("keydown", handleInput, { once: true });
 }
