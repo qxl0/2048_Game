@@ -12,19 +12,19 @@ function setupInput() {
   window.addEventListener("keydown", handleInput, { once: true });
 }
 
-function handleInput(e) {
+async function handleInput(e) {
   switch (e.key) {
     case "ArrowLeft":
-      moveLeft();
+      await moveLeft();
       break;
     case "ArrowRight":
-      moveRight();
+      await moveRight();
       break;
     case "ArrowUp":
-      moveUp();
+      await moveUp();
       break;
     case "ArrowDown":
-      moveDown();
+      await moveDown();
       break;
     default:
       setupInput();
@@ -53,25 +53,30 @@ function moveRight() {
   return slideTiles(grid.cellsByRow.map((row) => [...row].reverse()));
 }
 function slideTiles(cells) {
-  cells.forEach((group) => {
-    for (let i = 1; i < group.length; i++) {
-      const cell = group[i];
-      if (cell.tile == null) continue;
-      let lastValideCell;
-      for (let j = i - 1; j >= 0; j--) {
-        const moveToCell = group[j];
-        if (!moveToCell.canAccept(cell.tile)) break;
-        lastValideCell = moveToCell;
-      }
-
-      if (lastValideCell != null) {
-        if (lastValideCell.tile != null) {
-          lastValideCell.mergeTile = cell.tile;
-        } else {
-          lastValideCell.tile = cell.tile;
+  return Promise.all(
+    cells.flatMap((group) => {
+      const promises = [];
+      for (let i = 1; i < group.length; i++) {
+        const cell = group[i];
+        if (cell.tile == null) continue;
+        let lastValideCell;
+        for (let j = i - 1; j >= 0; j--) {
+          const moveToCell = group[j];
+          if (!moveToCell.canAccept(cell.tile)) break;
+          lastValideCell = moveToCell;
         }
-        cell.tile = null;
+
+        if (lastValideCell != null) {
+          promises.push(cell.tile.waitForTransition());
+          if (lastValideCell.tile != null) {
+            lastValideCell.mergeTile = cell.tile;
+          } else {
+            lastValideCell.tile = cell.tile;
+          }
+          cell.tile = null;
+        }
       }
-    }
-  });
+      return promises;
+    })
+  );
 }
