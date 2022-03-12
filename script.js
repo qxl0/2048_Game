@@ -33,6 +33,8 @@ async function handleInput(e) {
 
   grid.cells.forEach((cell) => cell.mergeTiles());
 
+  const newTile = new Tile(gameBoard);
+  grid.randomEmptyCell().tile = newTile;
   setupInput();
 }
 
